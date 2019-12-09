@@ -48,7 +48,11 @@ if (( BUILD_HISTORICAL )) ; then
   BOOST_VERSION=1.57.0-p1 $SOURCE_DIR/source/boost/build.sh
   BOOST_VERSION=1.57.0-p2 $SOURCE_DIR/source/boost/build.sh
 fi
-BOOST_VERSION=1.57.0-p3 $SOURCE_DIR/source/boost/build.sh
+if [[ "$ARCH_NAME" == "aarch64" ]]; then
+  BOOST_VERSION=1.70.0 $SOURCE_DIR/source/boost/build.sh
+else
+  BOOST_VERSION=1.57.0-p3 $SOURCE_DIR/source/boost/build.sh
+fi
 
 ################################################################################
 # Build Python
@@ -116,8 +120,7 @@ if (( BUILD_HISTORICAL )) ; then
   CRCUTIL_VERSION=440ba7babeff77ffad992df3a10c767f184e946e\
     $SOURCE_DIR/source/crcutil/build.sh
 fi
-CRCUTIL_VERSION=440ba7babeff77ffad992df3a10c767f184e946e-p1\
-  $SOURCE_DIR/source/crcutil/build.sh
+CRCUTIL_VERSION=440ba7babeff77ffad992df3a10c767f184e946e-p2 $SOURCE_DIR/source/crcutil/build.sh
 
 ################################################################################
 # Build OpenSSL - this is not intended for production use of Impala.
@@ -308,8 +311,9 @@ FLATBUFFERS_VERSION=1.6.0 $SOURCE_DIR/source/flatbuffers/build.sh
 # Build Kudu
 ################################################################################
 (
-  export BOOST_VERSION=1.57.0-p3
-  export KUDU_VERSION=84086fe
+# export BOOST_VERSION=1.57.0-p3
+  export BOOST_VERSION=1.70.0
+  export KUDU_VERSION=84086fe-p1
   export PYTHON_VERSION=2.7.16
   if $SOURCE_DIR/source/kudu/build.sh is_supported_platform; then
     $SOURCE_DIR/source/kudu/build.sh build

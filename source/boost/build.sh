@@ -33,8 +33,12 @@ if needs_build_package ; then
   if [[ ! "$OSTYPE" == "darwin"* && $SYSTEM_GCC -eq 0 ]]; then
     echo "using gcc : $GCC_VERSION : $BUILD_DIR/gcc-$GCC_VERSION/bin/g++ ;" > tools/build/src/user-config.jam
     TOOLSET=--toolset=gcc-$GCC_VERSION
+    #if [[ "$ARCH_NAME" == "aarch64" ]]; then
+     # ARCHITECTURE=architecture=arm
+    #fi
   else
     TOOLSET=
+   # ARCHITECTURE=
   fi
   CXXFLAGS+=" -Wno-deprecated-declarations"
   # Update compilers to use our toolchain
